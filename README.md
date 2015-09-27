@@ -13,7 +13,7 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
+It works on iOS, Android, Windows Phone and Store Apps, OS X, tvOS, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
 
@@ -210,7 +210,7 @@ cocos compile -p ios|mac|android|win32|win8_1|metro|web -m debug|release
 cocos run -p ios|mac|android|win32|win8_1|metro|web -m debug|release
 ```
 
-* For OS X / iOS
+* For OS X / iOS / tvOS
 
 ```
 $ cd cocos2d-x/build
