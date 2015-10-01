@@ -173,6 +173,39 @@ Controller::~Controller()
 
 void Controller::registerListeners()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_TVOS
+    if (_impl->_gcController.microGamepad != nil)
+    {
+        _impl->_gcController.microGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_UP, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_DOWN, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_LEFT, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_RIGHT, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.valueChangedHandler = ^(GCMicroGamepad *gamepad, GCControllerElement *element){
+            
+            if (element == gamepad.buttonA)
+            {
+                onButtonEvent(Key::BUTTON_A, gamepad.buttonA.isPressed, gamepad.buttonA.value, gamepad.buttonA.isAnalog);
+            }
+            else if (element == gamepad.buttonX)
+            {   
+                onButtonEvent(Key::BUTTON_X, gamepad.buttonX.isPressed, gamepad.buttonX.value, gamepad.buttonX.isAnalog);
+            }
+        };
+    }
+    else
+#endif
     if (_impl->_gcController.extendedGamepad != nil)
     {
         _impl->_gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
@@ -239,35 +272,6 @@ void Controller::registerListeners()
             else if (element == gamepad.rightTrigger)
             {
                 onAxisEvent(Key::AXIS_RIGHT_TRIGGER, gamepad.rightTrigger.value, gamepad.rightTrigger.isAnalog);
-            }
-        };
-    }
-    else if (_impl->_gcController.microGamepad != nil)
-    {
-        _impl->_gcController.microGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-            onButtonEvent(Key::BUTTON_DPAD_UP, pressed, value, button.isAnalog);
-        };
-        
-        _impl->_gcController.microGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-            onButtonEvent(Key::BUTTON_DPAD_DOWN, pressed, value, button.isAnalog);
-        };
-        
-        _impl->_gcController.microGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-            onButtonEvent(Key::BUTTON_DPAD_LEFT, pressed, value, button.isAnalog);
-        };
-        
-        _impl->_gcController.microGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-            onButtonEvent(Key::BUTTON_DPAD_RIGHT, pressed, value, button.isAnalog);
-        };
-        
-        _impl->_gcController.microGamepad.valueChangedHandler = ^(GCMicroGamepad *gamepad, GCControllerElement *element){
-            if (element == gamepad.buttonA)
-            {
-                onButtonEvent(Key::BUTTON_A, gamepad.buttonA.isPressed, gamepad.buttonA.value, gamepad.buttonA.isAnalog);
-            }
-            else if (element == gamepad.buttonX)
-            {
-                onButtonEvent(Key::BUTTON_X, gamepad.buttonX.isPressed, gamepad.buttonX.value, gamepad.buttonX.isAnalog);
             }
         };
     }
