@@ -371,6 +371,7 @@ public:
     /** Sets the image used when the item is disabled. */
     void setDisabledImage(Node* image);
     
+    virtual void activate() override;
     /**
      * The item was selected (not activated), similar to "mouse-over".
      @since v0.99.5
@@ -388,6 +389,7 @@ CC_CONSTRUCTOR_ACCESS:
     :_normalImage(nullptr)
     ,_selectedImage(nullptr)
     ,_disabledImage(nullptr)
+    ,_zoomEffect(false)
     {}
     
     /** Initializes a menu item with a normal, selected and disabled image with target/selector. */
@@ -395,6 +397,8 @@ CC_CONSTRUCTOR_ACCESS:
     
     /** Initializes a menu item with a normal, selected and disabled image with a callable object. */
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
+
+	void setZoomEffect(bool state) { _zoomEffect = state; }
     
 protected:
     virtual void updateImagesVisibility();
@@ -405,6 +409,9 @@ protected:
     Node* _selectedImage;
     /** The image used when the item is disabled. */
     Node* _disabledImage;
+	/** true if we wan't a zoom effect when having the finger on the button */
+    bool _zoomEffect;
+    float _originalScale;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItemSprite);

@@ -569,6 +569,7 @@ bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSpri
 bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback)
 {
     MenuItem::initWithCallback(callback);
+    _originalScale = 1.0f;
     setNormalImage(normalSprite);
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
@@ -582,6 +583,19 @@ bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSpri
     setCascadeOpacityEnabled(true);
 
     return true;
+}
+
+void MenuItemSprite::activate()
+{
+    if (_enabled)
+    {
+		if (!_zoomEffect)
+		{
+			this->stopAllActions();
+			this->setScale(_originalScale);
+		}
+		MenuItem::activate();
+    }
 }
 
 /**
@@ -608,12 +622,36 @@ void MenuItemSprite::selected()
             _normalImage->setVisible(true);
         }
     }
+
+    Action *action = getActionByTag(kZoomActionTag);
+    if (action)
+    {
+        this->stopAction(action);
+    }
+    else
+    {
+        _originalScale = this->getScale();
+    }
+
+    if (_zoomEffect)
+    {
+        Action *zoomAction = ScaleTo::create(0.1f, _originalScale * 1.2f);
+        zoomAction->setTag(kZoomActionTag);
+        this->runAction(zoomAction);
+    }
 }
 
 void MenuItemSprite::unselected()
 {
     MenuItem::unselected();
     this->updateImagesVisibility();
+    if (_zoomEffect)
+    {
+        this->stopActionByTag(kZoomActionTag);
+        Action *zoomAction = ScaleTo::create(0.1f, _originalScale);
+        zoomAction->setTag(kZoomActionTag);
+        this->runAction(zoomAction);
+    }
 }
 
 void MenuItemSprite::setEnabled(bool bEnabled)
