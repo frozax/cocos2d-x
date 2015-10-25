@@ -947,6 +947,22 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
     }
 }
 
+void Sprite::setTextureCoordsUV(Rect rect)
+{
+	setDirty(true);
+	float left = rect.origin.x;
+	float right = rect.origin.x + rect.size.width;
+	float top = rect.origin.y;
+	float bottom = rect.origin.y + rect.size.height;
+	_quad.bl.texCoords.u = left;
+	_quad.bl.texCoords.v = bottom;
+	_quad.br.texCoords.u = right;
+	_quad.br.texCoords.v = bottom;
+	_quad.tl.texCoords.u = left;
+	_quad.tl.texCoords.v = top;
+	_quad.tr.texCoords.u = right;
+	_quad.tr.texCoords.v = top;
+}
 
 // MARK: visit, draw, transform
 
