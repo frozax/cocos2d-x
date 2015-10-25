@@ -578,10 +578,15 @@ CC_CONSTRUCTOR_ACCESS:
      * @param PolygonInfo the polygon information object
      */
     void setPolygonInfo(const PolygonInfo& info);
+
+    virtual void setTextureCoords(Rect rect);
+	/**
+	 * set the texture coordinates in UV coords (not relative to texture size)
+	*/
+    void setTextureCoordsUV(Rect rect);
 protected:
 
     void updateColor() override;
-    virtual void setTextureCoords(Rect rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
