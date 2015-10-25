@@ -582,6 +582,10 @@ CC_CONSTRUCTOR_ACCESS :
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
     
+	/**
+	 * set the texture coordinates in UV coords (not relative to texture size)
+	*/
+    void setTextureCoordsUV(Rect rect);
 protected:
 
     void updateColor() override;
