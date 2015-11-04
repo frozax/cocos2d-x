@@ -145,6 +145,14 @@ Node * Node::create()
     return ret;
 }
 
+Node * Node::create(std::string name)
+{
+	auto ret = Node::create();
+	if ( ret != nullptr)
+		ret->setName(name);
+	return ret;
+}
+
 Node::~Node()
 {
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
