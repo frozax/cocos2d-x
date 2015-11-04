@@ -805,6 +805,7 @@ void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int 
 
 void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 {
+    setFrameSize(w, h);
     float frameSizeW = _screenSize.width;
     float frameSizeH = _screenSize.height;
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
