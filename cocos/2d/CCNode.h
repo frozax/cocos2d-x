@@ -127,6 +127,12 @@ public:
      */
     static Node * create();
 
+	/**
+	 * Allocates and initialized a node with a name.
+	 ] return a initialized node which is marked as autorelease.
+	 */
+    static Node * create(std::string name);
+
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string
