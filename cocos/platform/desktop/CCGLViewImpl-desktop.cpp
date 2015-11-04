@@ -346,7 +346,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     _frameZoomFactor = frameZoomFactor;
 
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE,GL_TRUE);
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
@@ -749,6 +749,7 @@ void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
 
 void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 {
+	setFrameSize(w, h);
     float frameSizeW = _screenSize.width;
     float frameSizeH = _screenSize.height;
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
