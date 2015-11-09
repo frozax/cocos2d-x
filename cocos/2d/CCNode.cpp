@@ -416,7 +416,7 @@ void Node::setRotationSkewY(float rotationY)
 /// scale getter
 float Node::getScale(void) const
 {
-    CCASSERT( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+     // TODO? CCASSERT( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
     return _scaleX;
 }
 
