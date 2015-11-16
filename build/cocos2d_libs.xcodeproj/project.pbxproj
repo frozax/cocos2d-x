@@ -1262,6 +1262,15 @@
 		302F88191BB87195003EE292 /* cocos2d-prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 302F88061BB87195003EE292 /* cocos2d-prefix.pch */; };
 		302F881A1BB87195003EE292 /* OpenGL_Internal-tvos.h in Headers */ = {isa = PBXBuildFile; fileRef = 302F88071BB87195003EE292 /* OpenGL_Internal-tvos.h */; };
 		302F881B1BB89096003EE292 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
+		3082AE3D1BF91DA9000EED2D /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FED1807A56F005B8026 /* SimpleAudioEngine_objc.m */; };
+		3082AE3E1BF91DAD000EED2D /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FEB1807A56F005B8026 /* SimpleAudioEngine.mm */; };
+		3082AE3F1BF9453E000EED2D /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FE51807A56F005B8026 /* CDAudioManager.m */; };
+		3082AE401BF94544000EED2D /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FE81807A56F005B8026 /* CDOpenALSupport.m */; };
+		3082AE411BF94548000EED2D /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FEA1807A56F005B8026 /* CocosDenshion.m */; };
+		3082AE421BF94551000EED2D /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FEC1807A56F005B8026 /* SimpleAudioEngine_objc.h */; };
+		3082AE431BF94557000EED2D /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE91807A56F005B8026 /* CocosDenshion.h */; };
+		3082AE441BF9455E000EED2D /* CDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE61807A56F005B8026 /* CDConfig.h */; };
+		3082AE451BF94564000EED2D /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE41807A56F005B8026 /* CDAudioManager.h */; };
 		30FB85371BB552F9002F2F0F /* CCAllocatorGlobalNewDelete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03401A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp */; };
 		30FB85391BB552F9002F2F0F /* CCPUPlaneCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E19A1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp */; };
 		30FB853A1BB552F9002F2F0F /* CCPUBehaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0E01AA80A6500DDB1C5 /* CCPUBehaviour.cpp */; };
@@ -12099,6 +12108,7 @@
 				30FB89281BB552F9002F2F0F /* CCEventCustom.h in Headers */,
 				30FB89291BB552F9002F2F0F /* b2WheelJoint.h in Headers */,
 				30FB892A1BB552F9002F2F0F /* CCPUOnCountObserverTranslator.h in Headers */,
+				3082AE451BF94564000EED2D /* CDAudioManager.h in Headers */,
 				302F88121BB87195003EE292 /* CCESRenderer-tvos.h in Headers */,
 				30FB892B1BB552F9002F2F0F /* CCDownloader-apple.h in Headers */,
 				30FB892C1BB552F9002F2F0F /* CCFrameBuffer.h in Headers */,
@@ -12423,6 +12433,7 @@
 				30FB8A691BB552F9002F2F0F /* CCParticleSystem3D.h in Headers */,
 				30FB8A6A1BB552F9002F2F0F /* CCPUDoExpireEventHandler.h in Headers */,
 				30FB8A6B1BB552F9002F2F0F /* shapes.h in Headers */,
+				3082AE421BF94551000EED2D /* SimpleAudioEngine_objc.h in Headers */,
 				30FB8A6C1BB552F9002F2F0F /* CCScheduler.h in Headers */,
 				30FB8A6D1BB552F9002F2F0F /* btPolyhedralContactClipping.h in Headers */,
 				30FB8A6E1BB552F9002F2F0F /* CCMotionStreak.h in Headers */,
@@ -12766,6 +12777,7 @@
 				30FB8BC61BB552F9002F2F0F /* btConvex2dConvex2dAlgorithm.h in Headers */,
 				30FB8BC71BB552F9002F2F0F /* gim_box_collision.h in Headers */,
 				30FB8BC81BB552F9002F2F0F /* CCPUSlaveBehaviourTranslator.h in Headers */,
+				3082AE441BF9455E000EED2D /* CDConfig.h in Headers */,
 				30FB8BC91BB552F9002F2F0F /* CCControlSaturationBrightnessPicker.h in Headers */,
 				30FB8BCA1BB552F9002F2F0F /* b2RevoluteJoint.h in Headers */,
 				30FB8BCB1BB552F9002F2F0F /* CCPUDoFreezeEventHandler.h in Headers */,
@@ -12817,6 +12829,7 @@
 				30FB8BF91BB552F9002F2F0F /* ccTypes.h in Headers */,
 				30FB8BFA1BB552F9002F2F0F /* btHashMap.h in Headers */,
 				30FB8BFC1BB552F9002F2F0F /* btMinkowskiPenetrationDepthSolver.h in Headers */,
+				3082AE431BF94557000EED2D /* CocosDenshion.h in Headers */,
 				30FB8BFD1BB552F9002F2F0F /* CCPUPlane.h in Headers */,
 				302F881A1BB87195003EE292 /* OpenGL_Internal-tvos.h in Headers */,
 				30FB8BFE1BB552F9002F2F0F /* gim_geom_types.h in Headers */,
@@ -14855,6 +14868,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30FB85371BB552F9002F2F0F /* CCAllocatorGlobalNewDelete.cpp in Sources */,
+				3082AE3E1BF91DAD000EED2D /* SimpleAudioEngine.mm in Sources */,
 				302F881B1BB89096003EE292 /* UIVideoPlayer-ios.mm in Sources */,
 				30FB85391BB552F9002F2F0F /* CCPUPlaneCollider.cpp in Sources */,
 				30FB853A1BB552F9002F2F0F /* CCPUBehaviour.cpp in Sources */,
@@ -15112,6 +15126,7 @@
 				30FB86371BB552F9002F2F0F /* CCPhysics3DDebugDrawer.cpp in Sources */,
 				30FB86381BB552F9002F2F0F /* b2Body.cpp in Sources */,
 				30FB86391BB552F9002F2F0F /* b2EdgeAndPolygonContact.cpp in Sources */,
+				3082AE3F1BF9453E000EED2D /* CDAudioManager.m in Sources */,
 				30FB863A1BB552F9002F2F0F /* CCBundle3D.cpp in Sources */,
 				30FB863B1BB552F9002F2F0F /* btGImpactShape.cpp in Sources */,
 				30FB863C1BB552F9002F2F0F /* boxBoxDistance.cpp in Sources */,
@@ -15352,6 +15367,7 @@
 				30FB87291BB552F9002F2F0F /* CCPUDoExpireEventHandler.cpp in Sources */,
 				30FB872A1BB552F9002F2F0F /* btParallelConstraintSolver.cpp in Sources */,
 				30FB872B1BB552F9002F2F0F /* RegionAttachment.c in Sources */,
+				3082AE3D1BF91DA9000EED2D /* SimpleAudioEngine_objc.m in Sources */,
 				30FB872C1BB552F9002F2F0F /* CCSpriteBatchNode.cpp in Sources */,
 				30FB872D1BB552F9002F2F0F /* btCompoundCompoundCollisionAlgorithm.cpp in Sources */,
 				30FB872E1BB552F9002F2F0F /* CCPUListener.cpp in Sources */,
@@ -15632,9 +15648,11 @@
 				30FB88461BB552F9002F2F0F /* btGearConstraint.cpp in Sources */,
 				30FB88471BB552F9002F2F0F /* CCPUTextureRotator.cpp in Sources */,
 				30FB88481BB552F9002F2F0F /* CCPUEmitterManager.cpp in Sources */,
+				3082AE411BF94548000EED2D /* CocosDenshion.m in Sources */,
 				30FB88491BB552F9002F2F0F /* CCFileUtils-apple.mm in Sources */,
 				30FB884A1BB552F9002F2F0F /* ccUTF8.cpp in Sources */,
 				30FB884B1BB552F9002F2F0F /* CCDatas.cpp in Sources */,
+				3082AE401BF94544000EED2D /* CDOpenALSupport.m in Sources */,
 				30FB884C1BB552F9002F2F0F /* ccFPSImages.c in Sources */,
 				30FB884D1BB552F9002F2F0F /* btHeightfieldTerrainShape.cpp in Sources */,
 				30FB884E1BB552F9002F2F0F /* CCEventAcceleration.cpp in Sources */,

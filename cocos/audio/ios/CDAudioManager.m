@@ -330,10 +330,7 @@ static BOOL configured = FALSE;
 }    
 
 -(BOOL) isOtherAudioPlaying {
-    UInt32 isPlaying = 0;
-    UInt32 varSize = sizeof(isPlaying);
-    AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
-    return (isPlaying != 0);
+    return [[AVAudioSession sharedInstance] isOtherAudioPlaying];
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -410,9 +407,10 @@ static BOOL configured = FALSE;
 - (id) init: (tAudioManagerMode) mode {
     if ((self = [super init])) {
         
-        //Initialise the audio session 
-        AVAudioSession* session = [AVAudioSession sharedInstance];
-        session.delegate = self;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(audioSessionInterrupt:)
+                                                     name:AVAudioSessionInterruptionNotification
+                                                   object:nil];
     
         _mode = mode;
         backgroundMusicCompletionSelector = nil;
@@ -485,7 +483,10 @@ static BOOL configured = FALSE;
 #if TARGET_IPHONE_SIMULATOR
     //Calling audio route stuff on the simulator causes problems
     return NO;
-#else    
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TVOS
+    //Apple TV has no mute button
+    return NO;
+#else
     CFStringRef newAudioRoute;
     UInt32 propertySize = sizeof (CFStringRef);
     
@@ -719,16 +720,19 @@ static BOOL configured = FALSE;
     if (backgroundMusicCompletionSelector != nil) {
         [backgroundMusicCompletionListener performSelector:backgroundMusicCompletionSelector];
     }    
-}    
-
--(void) beginInterruption {
-    CDLOGINFO(@"Denshion::CDAudioManager - begin interruption");
-    [self audioSessionInterrupted];
 }
 
--(void) endInterruption {
-    CDLOGINFO(@"Denshion::CDAudioManager - end interruption");
-    [self audioSessionResumed];
+-(void) audioSessionInterrupt:(NSNotification*)notification {
+    NSUInteger type = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+    
+    if (type == AVAudioSessionInterruptionTypeBegan) {
+        CDLOGINFO(@"Denshion::CDAudioManager - begin interruption");
+        [self audioSessionInterrupted];
+    }
+    else if (type == AVAudioSessionInterruptionTypeEnded) {
+        CDLOGINFO(@"Denshion::CDAudioManager - end interruption");
+        [self audioSessionResumed];
+    }
 }
 
 #if __CC_PLATFORM_IOS >= 40000
