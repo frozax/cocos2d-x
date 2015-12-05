@@ -147,6 +147,7 @@ bool Controller::isConnected() const
 
 Controller::Controller()
     : _controllerTag(TAG_UNSET)
+	, _allowsRotation(false)
     , _impl(new ControllerImpl(this))
     , _connectEvent(nullptr)
     , _keyEvent(nullptr)
@@ -163,6 +164,10 @@ void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
         t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
         t.env->DeleteLocalRef(t.classID);
     }
+}
+
+void Controller::setAllowsRotation(bool allowsRotation)
+{
 }
 
 NS_CC_END

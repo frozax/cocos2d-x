@@ -179,6 +179,18 @@ public:
      * @return An integer that identifies the controller.
      */
     int getTag() const { return _controllerTag;}
+    
+    /**
+     * Changes the rotation behavior of controller.
+     * @param allowsRotation   True, if D-pad values should be transposed, when controller is rotated.
+     */
+    void setAllowsRotation(bool allowsRotation);
+    
+    /**
+     * Returns whether D-pad values are transposed, when controller is rotated.
+     *
+     */
+    bool getAllowsRotation() const { return _allowsRotation; }
 
 private:
     static std::vector<Controller*> s_allController;
@@ -201,6 +213,7 @@ private:
     int _deviceId;
 
     int _controllerTag;
+    bool _allowsRotation;
 
     ControllerImpl* _impl;
 

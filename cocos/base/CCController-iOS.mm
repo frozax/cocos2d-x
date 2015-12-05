@@ -153,6 +153,7 @@ void Controller::stopDiscoveryController()
 
 Controller::Controller()
 : _controllerTag(TAG_UNSET)
+, _allowsRotation(false)
 , _impl(new ControllerImpl(this))
 , _connectEvent(nullptr)
 , _keyEvent(nullptr)
@@ -343,6 +344,15 @@ bool Controller::isConnected() const
 
 void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
 {
+}
+
+void Controller::setAllowsRotation(bool allowsRotation)
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_TVOS
+    _allowsRotation = allowsRotation;
+    
+    _impl->_gcController.microGamepad.allowsRotation = allowsRotation ? YES : NO;
+#endif
 }
 
 NS_CC_END
