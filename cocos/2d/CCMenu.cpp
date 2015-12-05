@@ -281,46 +281,72 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
 
 void Menu::onTouchEnded(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
-    this->retain();
-    if (_selectedItem)
-    {
-        _selectedItem->unselected();
-        _selectedItem->activate();
-    }
-    _state = Menu::State::WAITING;
-    _selectedWithCamera = nullptr;
-    this->release();
+	CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchEnded] -- invalid state");
+	// can be another state if we cancelled the touch from external stuff
+	if (_state == Menu::State::TRACKING_TOUCH)
+	{
+		this->retain();
+		if (_selectedItem)
+		{
+			_selectedItem->unselected();
+			_selectedItem->activate();
+		}
+		_state = Menu::State::WAITING;
+		_selectedWithCamera = nullptr;
+		this->release();
+	}
 }
 
 void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
-    this->retain();
-    if (_selectedItem)
-    {
-        _selectedItem->unselected();
-    }
-    _state = Menu::State::WAITING;
-    this->release();
+    CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchCancelled] -- invalid state");
+	// can be another state if we cancelled the touch from external stuff
+	if (_state == Menu::State::TRACKING_TOUCH)
+	{
+		this->retain();
+		if (_selectedItem)
+		{
+			_selectedItem->unselected();
+		}
+		_state = Menu::State::WAITING;
+		this->release();
+	}
 }
 
 void Menu::onTouchMoved(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
-    MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
-    if (currentItem != _selectedItem)
-    {
-        if (_selectedItem)
-        {
-            _selectedItem->unselected();
-        }
-        _selectedItem = currentItem;
-        if (_selectedItem)
-        {
-            _selectedItem->selected();
-        }
-    }
+    CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchMoved] -- invalid state");
+	// can be another state if we cancelled the touch from external stuff
+	if (_state == Menu::State::TRACKING_TOUCH)
+	{
+		MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
+		if (currentItem != _selectedItem)
+		{
+			if (_selectedItem)
+			{
+				_selectedItem->unselected();
+			}
+			_selectedItem = currentItem;
+			if (_selectedItem)
+			{
+				_selectedItem->selected();
+			}
+		}
+	}
+}
+
+void Menu::setEnabled(bool value, bool unselect_item)
+{
+	_enabled = value;
+	if (!_enabled && unselect_item && _selectedItem)
+	{
+		// only when disabling
+		if (_selectedItem)
+		{
+			_selectedItem->unselected();
+		}
+		_state = Menu::State::WAITING;
+	}
 }
 
 //Menu - Alignment
