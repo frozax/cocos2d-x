@@ -154,8 +154,9 @@ public:
      * will have no effect.
      * The default value is true, a menu is enabled by default.
      * @param value true if menu is to be enabled, false if menu is to be disabled.
+     * @param unselect_item if true and an item is already selected, unselect it (if we want to disable)
      */
-    virtual void setEnabled(bool value) { _enabled = value; };
+    virtual void setEnabled(bool value, bool unselect_item=false);
 
     virtual bool onTouchBegan(Touch* touch, Event* event) override;
     virtual void onTouchEnded(Touch* touch, Event* event) override;
