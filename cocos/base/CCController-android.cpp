@@ -148,6 +148,7 @@ bool Controller::isConnected() const
 Controller::Controller()
     : _controllerTag(TAG_UNSET)
 	, _allowsRotation(false)
+	, _absoluteDpadValues(false)
     , _impl(new ControllerImpl(this))
     , _connectEvent(nullptr)
     , _keyEvent(nullptr)
@@ -167,6 +168,10 @@ void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
 }
 
 void Controller::setAllowsRotation(bool allowsRotation)
+{
+}
+
+void Controller::setAbsoluteDpadValues(bool absoluteDpadValues)
 {
 }
 

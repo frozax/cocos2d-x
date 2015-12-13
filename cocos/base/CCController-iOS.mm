@@ -154,6 +154,7 @@ void Controller::stopDiscoveryController()
 Controller::Controller()
 : _controllerTag(TAG_UNSET)
 , _allowsRotation(false)
+, _absoluteDpadValues(false)
 , _impl(new ControllerImpl(this))
 , _connectEvent(nullptr)
 , _keyEvent(nullptr)
@@ -352,6 +353,15 @@ void Controller::setAllowsRotation(bool allowsRotation)
     _allowsRotation = allowsRotation;
     
     _impl->_gcController.microGamepad.allowsRotation = allowsRotation ? YES : NO;
+#endif
+}
+
+void Controller::setAbsoluteDpadValues(bool absoluteDpadValues)
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_TVOS
+    _absoluteDpadValues = absoluteDpadValues;
+    
+    _impl->_gcController.microGamepad.reportsAbsoluteDpadValues = absoluteDpadValues ? YES : NO;
 #endif
 }
 

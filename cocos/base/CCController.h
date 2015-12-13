@@ -191,6 +191,18 @@ public:
      *
      */
     bool getAllowsRotation() const { return _allowsRotation; }
+    
+    /**
+     * Changes whether D-pad should report raw values.
+     * @param allowsRotation   True, if D-pad values should be transposed, when controller is rotated.
+     */
+    void setAbsoluteDpadValues(bool absoluteDpadValues);
+    
+    /**
+     * Changes whether D-pad reports raw values.
+     *
+     */
+    bool getAbsoluteDpadValues() const { return _absoluteDpadValues; }
 
 private:
     static std::vector<Controller*> s_allController;
@@ -214,6 +226,7 @@ private:
 
     int _controllerTag;
     bool _allowsRotation;
+    bool _absoluteDpadValues;
 
     ControllerImpl* _impl;
 
