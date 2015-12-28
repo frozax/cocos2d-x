@@ -376,13 +376,13 @@ public:
      * The item was selected (not activated), similar to "mouse-over".
      @since v0.99.5
      */
-    virtual void selected();
+    virtual void selected() override;
 
     /** The item was unselected. */
-    virtual void unselected();
+    virtual void unselected() override;
 
     /** Enables or disables the item. */
-    virtual void setEnabled(bool bEnabled);
+    virtual void setEnabled(bool bEnabled) override;
     
 CC_CONSTRUCTOR_ACCESS:
     MenuItemSprite()
