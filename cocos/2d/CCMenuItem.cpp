@@ -579,9 +579,12 @@ void MenuItemSprite::activate()
 {
     if (_enabled)
     {
-        this->stopAllActions();
-        this->setScale( _originalScale );
-        MenuItem::activate();
+		if (!_zoomEffect)
+		{
+			this->stopAllActions();
+			this->setScale(_originalScale);
+		}
+		MenuItem::activate();
     }
 }
 
