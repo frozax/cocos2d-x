@@ -566,8 +566,7 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
         {
             continue;
         }
-        Rect rect;
-        rect.size = child->getContentSize();
+        Rect rect = child->GetTouchRect();
         if (isScreenPointInRect(touchLocation, camera, child->getWorldToNodeTransform(), rect, nullptr))
         {
             return child;
