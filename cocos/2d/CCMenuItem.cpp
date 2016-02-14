@@ -153,6 +153,19 @@ std::string MenuItem::getDescription() const
     return StringUtils::format("<MenuItem | tag = %d>", _tag);
 }
 
+Rect MenuItem::GetTouchRect()
+{
+    Rect rect;
+    rect.size = getContentSize();
+    float add_x = rect.size.width*(_touch_size_coef - 1.0f);
+    float add_y = rect.size.height*(_touch_size_coef - 1.0f);
+    rect.size.width += add_x;
+    rect.size.height += add_y;
+    rect.origin.x -= add_x*0.5f;
+    rect.origin.y -= add_y*0.5f;
+    return rect;
+}
+
 //
 //CCMenuItemLabel
 //
