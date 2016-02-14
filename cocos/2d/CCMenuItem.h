@@ -97,6 +97,10 @@ public:
      * @js NA
      */
     virtual std::string getDescription() const override;
+
+    /** Frozax Games: can have a larger touch than the content size */
+    virtual void SetTouchSizeCoef(float f) { _touch_size_coef = f; }
+    virtual Rect GetTouchRect();
     
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -106,6 +110,7 @@ CC_CONSTRUCTOR_ACCESS:
     : _selected(false)
     , _enabled(false)
 	, _callback(nullptr)
+	, _touch_size_coef(1.0f)
     {}
     /**
      * @js NA
@@ -126,6 +131,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     bool            _selected;
     bool            _enabled;
+    float           _touch_size_coef;
     // callback
     ccMenuCallback _callback;
 
