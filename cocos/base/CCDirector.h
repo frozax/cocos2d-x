@@ -577,6 +577,11 @@ public:
      */
     bool isValid() const { return !_invalid; }
 
+	/* Frozax Games
+	Possibility to NOT clear the screen to speed up things
+	*/
+	void setEnableClear(bool b) { _enable_clear = b; }
+
 protected:
     void reset();
     
@@ -712,6 +717,8 @@ protected:
 
     /* whether or not the director is in a valid state */
     bool _invalid;
+
+	bool _enable_clear; // Frozax: used to disable glClear
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
