@@ -500,6 +500,11 @@ public:
      */
     const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
 
+	/* Frozax Games
+	Possibility to NOT clear the screen to speed up things
+	*/
+	void setEnableClear(bool b) { _enable_clear = b; }
+
 protected:
     void reset();
     
@@ -620,6 +625,8 @@ protected:
 
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
+
+	bool _enable_clear; // used to disable glClear
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
