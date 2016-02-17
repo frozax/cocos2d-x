@@ -217,6 +217,7 @@ void Director::setDefaultValues(void)
     double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
     _oldAnimationInterval = _animationInterval = 1.0 / fps;
 
+	_enable_clear = true;
     // Display FPS
     _displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
@@ -274,7 +275,8 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _renderer->clear();
+	if (_enable_clear)
+		_renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
