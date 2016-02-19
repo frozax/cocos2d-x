@@ -508,7 +508,7 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
     
     _saveFileCallback = callback;
     
-    std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
+    std::string fullpath = fileName;
     _saveToFileCommand.init(_globalZOrder);
     _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
     
