@@ -144,6 +144,11 @@ public:
      * @lua NA
      */
     virtual bool openURL(const std::string &url) = 0;
+
+	/**
+		tells if we want this shader
+	*/
+	virtual bool WantsShader(const std::string &shader) { return true; }
 };
 
 // end of platform group
