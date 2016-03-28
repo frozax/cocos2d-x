@@ -130,10 +130,18 @@ bool GLProgramCache::init()
 
 void GLProgramCache::loadDefaultGLPrograms()
 {
-#define LOAD_GL(shader_type, shader_name) if (CCApplication::getInstance()->WantsShader(GLProgram::shader_name)) { \
-    GLProgram *p = new (std::nothrow) GLProgram(); \
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define LOAD_GL(shader_type, shader_name) \
+	if (CCApplication::getInstance()->WantsShader(GLProgram::shader_name)) \
+	{ GLProgram *p = new (std::nothrow) GLProgram(); \
 	loadDefaultGLProgram(p, shader_type); \
     _programs.insert( std::make_pair( GLProgram::shader_name, p ) ); }
+#else
+#define LOAD_GL(shader_type, shader_name) \
+	{ GLProgram *p = new (std::nothrow) GLProgram(); \
+	loadDefaultGLProgram(p, shader_type); \
+    _programs.insert( std::make_pair( GLProgram::shader_name, p ) ); }
+#endif
 
     // Position Texture Color shader
 	LOAD_GL(kShaderType_PositionTextureColor, SHADER_NAME_POSITION_TEXTURE_COLOR);
