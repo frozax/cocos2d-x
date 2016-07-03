@@ -216,7 +216,13 @@ public:
         KEY_DPAD_DOWN,
         KEY_DPAD_CENTER,
         KEY_ENTER,
-        KEY_PLAY
+        KEY_PLAY,
+		KEY_BUTTON_A,
+		KEY_BUTTON_B,
+		KEY_BUTTON_C,
+		KEY_BUTTON_X,
+		KEY_BUTTON_Y,
+		KEY_BUTTON_Z,
     };
     
     /** Constructor.
