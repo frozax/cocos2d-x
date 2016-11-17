@@ -38,6 +38,8 @@
 #include "network/WebSocket.h"
 #include "network/HttpClient.h"
 
+#if CC_ENABLE_WEBSOCKETS
+
 #include "json/rapidjson.h"
 #include "json/document-wrapper.h"
 #include "json/stringbuffer.h"
@@ -1218,3 +1220,4 @@ void SocketIO::removeSocket(const std::string& uri)
 
 NS_CC_END
 
+#endif // CC_ENABLE_WEBSOCKETS

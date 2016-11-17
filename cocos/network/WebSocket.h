@@ -29,6 +29,8 @@
 
 #pragma once
 
+#if CC_ENABLE_WEBSOCKETS
+
 #include <string>
 #include <vector>
 #include <mutex>
@@ -278,4 +280,6 @@ NS_CC_END
 
 // end group
 /// @}
+
+#endif // CC_ENABLE_WEBSOCKETS
 

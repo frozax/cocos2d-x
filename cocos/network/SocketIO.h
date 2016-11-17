@@ -64,6 +64,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
+#if CC_ENABLE_WEBSOCKETS
 
 /**
  * @addtogroup network
@@ -295,3 +296,4 @@ NS_CC_END
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */
 
+#endif // CC_ENABLE_WEBSOCKETS
