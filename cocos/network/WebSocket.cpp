@@ -33,6 +33,8 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 
+#if CC_ENABLE_WEBSOCKETS
+
 #include <thread>
 #include <mutex>
 #include <queue>
@@ -966,3 +968,5 @@ int WebSocket::onSocketCallback(struct lws *wsi,
 }
 
 NS_CC_END
+
+#endif // CC_ENABLE_WEBSOCKETS

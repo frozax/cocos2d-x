@@ -30,6 +30,8 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
+#if CC_ENABLE_WEBSOCKETS
+
 #include <string>
 #include <vector>
 #include <mutex>
@@ -254,3 +256,5 @@ NS_CC_END
 /// @}
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */
+
+#endif // CC_ENABLE_WEBSOCKETS
