@@ -263,7 +263,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
                     $(LOCAL_PATH)/../external/clipper \
-                    $(LOCAL_PATH)/../external/uv/include
+                    $(LOCAL_PATH)/../external/uv/include \
+                    $(LOCAL_PATH)/platform
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
