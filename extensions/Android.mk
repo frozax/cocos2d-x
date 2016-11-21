@@ -188,7 +188,8 @@ LOCAL_STATIC_LIBRARIES += cocos_network_static
 
 LOCAL_CXXFLAGS += -fexceptions
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/../cocos/platform
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/. \
                            $(LOCAL_PATH)/.. \
