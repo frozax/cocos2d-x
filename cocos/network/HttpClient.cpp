@@ -404,16 +404,16 @@ HttpClient::HttpClient()
 , _cookie(nullptr)
 , _requestSentinel(new HttpRequest())
 {
-    CCLOG("In the constructor of HttpClient!");
-    memset(_responseMessage, 0, RESPONSE_BUFFER_SIZE * sizeof(char));
-    _scheduler = Director::getInstance()->getScheduler();
-    increaseThreadCount();
+	//CCLOG("In the constructor of HttpClient!");
+	memset(_responseMessage, 0, RESPONSE_BUFFER_SIZE * sizeof(char));
+	_scheduler = Director::getInstance()->getScheduler();
+	increaseThreadCount();
 }
 
 HttpClient::~HttpClient()
 {
-    CC_SAFE_RELEASE(_requestSentinel);
-    CCLOG("HttpClient destructor");
+	CC_SAFE_RELEASE(_requestSentinel);
+	//CCLOG("HttpClient destructor");
 }
 
 //Lazy create semaphore & mutex & thread
