@@ -259,9 +259,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     // Issue #914 #924
 //     Director *director = [Director sharedDirector];
 //     [director reshapeProjection:size_];
-    cocos2d::Size size;
-    size.width = size_.width;
-    size.height = size_.height;
+	cocos2d::Director::getInstance()->getOpenGLView()->setFrameSize(size_.width, size_.height);
     //cocos2d::Director::getInstance()->reshapeProjection(size);
 
     // Avoid flicker. Issue #350
