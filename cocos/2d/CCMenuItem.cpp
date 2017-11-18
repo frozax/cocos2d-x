@@ -603,8 +603,12 @@ void MenuItemSprite::activate()
     {
 		if (!_zoomEffect)
 		{
-			this->stopAllActions();
-			this->setScale(_originalScale);
+			Action *action = getActionByTag(kZoomActionTag);
+			if (action)
+			{
+				this->stopAction(action);
+				this->setScale(_originalScale);
+			}
 		}
 		MenuItem::activate();
     }
