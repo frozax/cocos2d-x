@@ -218,7 +218,8 @@ void Node::cleanup()
     // timers
     this->unscheduleAllCallbacks();
 
-    _eventDispatcher->removeEventListenersForTarget(this);
+	// FG: remove this broken code when you remove and add nodes with listeners
+    //_eventDispatcher->removeEventListenersForTarget(this);
     
     for( const auto &child: _children)
         child->cleanup();
