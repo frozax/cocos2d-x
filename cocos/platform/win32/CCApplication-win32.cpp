@@ -240,6 +240,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_BELARUSIAN:
             ret = LanguageType::BELARUSIAN;
             break;
+        case LANG_DANISH:
+            ret = LanguageType::DANISH;
+            break;
     }
     
     return ret;
