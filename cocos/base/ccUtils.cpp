@@ -524,6 +524,10 @@ LanguageType getLanguageTypeByISO2(const char* code)
     {
         ret = LanguageType::BELARUSIAN;
     }
+    else if (strncmp(code, "da", 2) == 0)
+    {
+        ret = LanguageType::DANISH;
+    }
     return ret;
 }
 
