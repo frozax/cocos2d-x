@@ -188,7 +188,7 @@ Rect GLViewImpl::getSafeAreaRect() const {
 
     if (isCutoutEnabled) {
         // screen with enabled cutout area (ex. Google Pixel 3 XL, Huawei P20, Asus ZenFone 5, etc)
-        static int* safeInsets = JniHelper::callStaticIntArrayMethod("org/cocos2dx/lib/Cocos2dxHelper", "getSafeInsets");
+        int* safeInsets = JniHelper::callStaticIntArrayMethod("org/cocos2dx/lib/Cocos2dxHelper", "getSafeInsets");
         if (safeInsets != nullptr) {
             float safeInsetBottom = safeInsets[0] / _scaleY;
             float safeInsetLeft = safeInsets[1] / _scaleX;
