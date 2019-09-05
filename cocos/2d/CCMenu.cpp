@@ -282,8 +282,8 @@ bool Menu::onTouchBegan(Touch* touch, Event* /*event*/)
 
 void Menu::onTouchEnded(Touch* /*touch*/, Event* /*event*/)
 {
-	CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchEnded] -- invalid state");
-	// can be another state if we cancelled the touch from external stuff
+	// CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchEnded] -- invalid state");
+	// Frozax: can be another state if we cancelled the touch from external stuff
 	if (_state == Menu::State::TRACKING_TOUCH)
 	{
 		this->retain();
@@ -300,8 +300,8 @@ void Menu::onTouchEnded(Touch* /*touch*/, Event* /*event*/)
 
 void Menu::onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchCancelled] -- invalid state");
-	// can be another state if we cancelled the touch from external stuff
+    // CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchCancelled] -- invalid state");
+	// Frozax: can be another state if we cancelled the touch from external stuff
 	if (_state == Menu::State::TRACKING_TOUCH)
 	{
 		this->retain();
@@ -316,8 +316,8 @@ void Menu::onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
 
 void Menu::onTouchMoved(Touch* touch, Event* /*event*/)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchMoved] -- invalid state");
-	// can be another state if we cancelled the touch from external stuff
+    // CCASSERT(_state == Menu::State::TRACKING_TOUCH || !_enabled, "[Menu ccTouchMoved] -- invalid state");
+	// Frozax: can be another state if we cancelled the touch from external stuff
 	if (_state == Menu::State::TRACKING_TOUCH)
 	{
 		MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
