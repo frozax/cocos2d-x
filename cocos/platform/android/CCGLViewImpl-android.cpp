@@ -143,7 +143,6 @@ Rect GLViewImpl::getSafeAreaRect() const {
     float marginY = DEFAULT_MARGIN_ANDROID / _scaleY;
 
     bool isScreenRound = JniHelper::callStaticBooleanMethod("org/cocos2dx/lib/Cocos2dxHelper", "isScreenRound");
-    bool hasSoftKeys = JniHelper::callStaticBooleanMethod("org/cocos2dx/lib/Cocos2dxHelper", "hasSoftKeys");
     bool isCutoutEnabled = JniHelper::callStaticBooleanMethod("org/cocos2dx/lib/Cocos2dxHelper", "isCutoutEnabled");
 
     if(isScreenRound) {
@@ -159,30 +158,6 @@ Rect GLViewImpl::getSafeAreaRect() const {
             safeAreaRect.size.height -= (marginY * 2.f);
 
             // landscape: no changes with X-coords
-        }
-    } else if (deviceAspectRatio >= WIDE_SCREEN_ASPECT_RATIO_ANDROID) {
-        // almost all devices on the market have round corners if
-        // deviceAspectRatio more than 2 (@see "android.max_aspect" parameter in AndroidManifest.xml)
-        float bottomMarginIfPortrait = 0;
-        if(hasSoftKeys) {
-            bottomMarginIfPortrait = marginY * 2.f;
-        }
-
-        if(safeAreaRect.size.width < safeAreaRect.size.height) {
-            // portrait: double margin space if device has soft menu
-            safeAreaRect.origin.y += bottomMarginIfPortrait;
-            safeAreaRect.size.height -= (bottomMarginIfPortrait + marginY);
-        } else {
-            // landscape: ignore double margin at the bottom in any cases
-            // prepare signle margin for round corners
-            safeAreaRect.origin.y += marginY;
-            safeAreaRect.size.height -= (marginY * 2.f);
-        }
-    } else {
-        if(hasSoftKeys && (safeAreaRect.size.width < safeAreaRect.size.height)) {
-            // portrait: preserve only for soft system menu
-            safeAreaRect.origin.y += marginY * 2.f;
-            safeAreaRect.size.height -= (marginY * 2.f);
         }
     }
 
