@@ -528,6 +528,10 @@ LanguageType getLanguageTypeByISO2(const char* code)
     {
         ret = LanguageType::DANISH;
     }
+    else if (strncmp(code, "th", 2) == 0)
+    {
+        ret = LanguageType::THAI;
+    }
     return ret;
 }
 

@@ -73,6 +73,7 @@ enum class LanguageType
     BULGARIAN,
     BELARUSIAN,
     DANISH,
+    THAI,
 };
 
 // END of platform group

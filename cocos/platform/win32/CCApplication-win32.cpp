@@ -238,6 +238,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_DANISH:
             ret = LanguageType::DANISH;
             break;
+        case LANG_THAI:
+            ret = LanguageType::THAI;
+            break;
     }
     
     return ret;
