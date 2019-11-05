@@ -36,34 +36,35 @@ THE SOFTWARE.
 
 static pthread_key_t g_key;
 
-jclass _getClassID(const char *className) {
-    if (nullptr == className) {
-        return nullptr;
-    }
-
-    JNIEnv* env = cocos2d::JniHelper::getEnv();
-
-    jstring _jstrClassName = env->NewStringUTF(className);
-
-    jclass _clazz = (jclass) env->CallObjectMethod(cocos2d::JniHelper::classloader,
-                                                   cocos2d::JniHelper::loadclassMethod_methodID,
-                                                   _jstrClassName);
-
-    if (nullptr == _clazz) {
-        LOGE("Classloader failed to find class of %s", className);
-        env->ExceptionClear();
-    }
-
-    env->DeleteLocalRef(_jstrClassName);
-        
-    return _clazz;
-}
-
-void _detachCurrentThread(void* a) {
-    cocos2d::JniHelper::getJavaVM()->DetachCurrentThread();
-}
-
 namespace cocos2d {
+
+    jclass _getClassID(const char *className) {
+        if (nullptr == className) {
+            return nullptr;
+        }
+
+        JNIEnv* env = cocos2d::JniHelper::getEnv();
+
+        jstring _jstrClassName = env->NewStringUTF(className);
+
+        jclass _clazz = (jclass) env->CallObjectMethod(cocos2d::JniHelper::classloader,
+                                                    cocos2d::JniHelper::loadclassMethod_methodID,
+                                                    _jstrClassName);
+
+        if (nullptr == _clazz) {
+            LOGE("Classloader failed to find class of %s", className);
+            env->ExceptionClear();
+        }
+
+        env->DeleteLocalRef(_jstrClassName);
+            
+        return _clazz;
+    }
+
+    void _detachCurrentThread(void* a) {
+        cocos2d::JniHelper::getJavaVM()->DetachCurrentThread();
+    }
+
 
     JavaVM* JniHelper::_psJavaVM = nullptr;
     jmethodID JniHelper::loadclassMethod_methodID = nullptr;
