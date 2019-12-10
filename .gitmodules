@@ -4,6 +4,3 @@
 [submodule "tools/bindings-generator"]
         path = tools/bindings-generator
         url = git://github.com/cocos2d/bindings-generator.git
-[submodule "web"]
-        path = web
-        url = git://github.com/cocos2d/cocos2d-html5.git
