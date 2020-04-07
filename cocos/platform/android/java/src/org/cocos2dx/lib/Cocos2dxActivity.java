@@ -360,8 +360,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
     private static boolean isDeviceLocked() {
         KeyguardManager keyguardManager = (KeyguardManager)getContext().getSystemService(Context.KEYGUARD_SERVICE);
-        boolean locked = keyguardManager.inKeyguardRestrictedInputMode();
-        return locked;
+        if (keyguardManager != null)
+            return keyguardManager.inKeyguardRestrictedInputMode();
+        return false;
     }
 
     private static boolean isDeviceAsleep() {
