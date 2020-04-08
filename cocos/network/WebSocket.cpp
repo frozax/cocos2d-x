@@ -43,7 +43,11 @@
 #include <signal.h>
 #include <errno.h>
 
+#define DISABLE_WS
+
+#ifndef DISABLE_WS
 #include "libwebsockets.h"
+#endif
 
 #define NS_NETWORK_BEGIN namespace cocos2d { namespace network {
 #define NS_NETWORK_END }}
@@ -170,6 +174,8 @@ static void printWebSocketLog(int level, const char *line)
 #endif // #ifdef WEBSOCKETS_LOGGING
 
 NS_NETWORK_BEGIN
+
+#ifndef DISABLE_WS
 
 enum WS_MSG {
     WS_MSG_TO_SUBTRHEAD_SENDING_STRING = 0,
@@ -517,6 +523,7 @@ void WebSocket::closeAllConnections()
     }
 }
 
+#endif
 WebSocket::WebSocket()
 : _readyState(State::CONNECTING)
 , _wsInstance(nullptr)
@@ -525,6 +532,7 @@ WebSocket::WebSocket()
 , _delegate(nullptr)
 , _closeState(CloseState::NONE)
 {
+#ifndef DISABLE_WS
     // reserve data buffer to avoid allocate memory frequently
     _receivedData.reserve(WS_RESERVE_RECEIVE_BUFFER_SIZE);
     if (__websocketInstances == nullptr)
@@ -540,10 +548,12 @@ WebSocket::WebSocket()
             return;
         close();
     });
+#endif
 }
 
 WebSocket::~WebSocket()
 {
+#ifndef DISABLE_WS
     LOGD("In the destructor of WebSocket (%p)\n", this);
 
     std::lock_guard<std::mutex> lk(__instanceMutex);
@@ -579,6 +589,7 @@ WebSocket::~WebSocket()
     Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
     
     *_isDestroyed = true;
+#endif
 }
 
 
@@ -587,6 +598,7 @@ bool WebSocket::init(const Delegate& delegate,
                      const std::vector<std::string>* protocols/* = nullptr*/,
                      const std::string& caFilePath/* = ""*/)
 {
+#ifndef DISABLE_WS
     _delegate = const_cast<Delegate*>(&delegate);
     _url = url;
     _caFilePath = caFilePath;
@@ -644,11 +656,13 @@ bool WebSocket::init(const Delegate& delegate,
         __wsHelper->createWebSocketThread();
     }
 
+#endif
     return true;
 }
 
 void WebSocket::send(const std::string& message)
 {
+#ifndef DISABLE_WS
     if (_readyState == State::OPEN)
     {
         // In main thread
@@ -669,8 +683,10 @@ void WebSocket::send(const std::string& message)
     {
         LOGD("Couldn't send message since websocket wasn't opened!\n");
     }
+#endif
 }
 
+#ifndef DISABLE_WS
 void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 {
     if (_readyState == State::OPEN)
@@ -701,9 +717,11 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
         LOGD("Couldn't send message since websocket wasn't opened!\n");
     }
 }
+#endif
 
 void WebSocket::close()
 {
+#ifndef DISABLE_WS
     if (_closeState != CloseState::NONE)
     {
         LOGD("close was invoked, don't invoke it again!\n");
@@ -737,7 +755,10 @@ void WebSocket::close()
     // Wait 5 milliseconds for onConnectionClosed to exit!
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
     _delegate->onClose(this);
+#endif
 }
+
+#ifndef DISABLE_WS
 
 void WebSocket::closeAsync()
 {
@@ -759,13 +780,17 @@ void WebSocket::closeAsync()
 
     _readyState = State::CLOSING;
 }
+#endif
 
 WebSocket::State WebSocket::getReadyState()
 {
+#ifndef DISABLE_WS
     std::lock_guard<std::mutex> lk(_readyStateMutex);
+#endif
     return _readyState;
 }
 
+#ifndef DISABLE_WS
 struct lws_vhost* WebSocket::createVhost(struct lws_protocols* protocols, int& sslConnection)
 {
     auto fileUtils = FileUtils::getInstance();
@@ -1350,5 +1375,6 @@ int WebSocket::onSocketCallback(struct lws *wsi,
 
     return ret;
 }
+#endif
 
 NS_NETWORK_END
