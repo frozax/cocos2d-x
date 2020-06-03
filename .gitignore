@@ -171,6 +171,8 @@ cmake_build*
 
 # tmp android build files
 cocos/platform/android/libcocos2dx/.project
+cocos/platform/android/libcocos2dx/.classpath
+cocos/platform/android/libcocos2dx/.settings/
 tests/lua-tests/project/proj.android/.project
 tests/lua-tests/project/proj.android/app/.project
 tests/*/proj.android/.settings/org.eclipse.buildship.core.prefs
