@@ -302,7 +302,7 @@ THE SOFTWARE.
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
-#define CC_USE_JPEG  0
+#define CC_USE_JPEG  1
 #endif // CC_USE_JPEG
 
 /** Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
