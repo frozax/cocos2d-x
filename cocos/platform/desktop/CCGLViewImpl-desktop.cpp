@@ -599,22 +599,28 @@ void GLViewImpl::setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monito
     glfwSetWindowMonitor(_mainWindow, _monitor, 0, 0, videoMode.width, videoMode.height, videoMode.refreshRate);
 }
 
-void GLViewImpl::setWindowed(int width, int height) {
-    if (!this->isFullscreen()) {
-        this->setFrameSize(width, height);
-    } else {
-        const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
-        int xpos = 0, ypos = 0;
-        glfwGetMonitorPos(_monitor, &xpos, &ypos);
-        xpos += (videoMode->width - width) * 0.5;
-        ypos += (videoMode->height - height) * 0.5;
-        _monitor = nullptr;
-        glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
+void GLViewImpl::setWindowed(int width, int height, int imonitor)
+{
+	int count;
+	auto monitors = glfwGetMonitors(&count);
+    if (imonitor >= count)
+        imonitor = 0;
+    _monitor = monitors[imonitor];
+
+	const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
+	int xpos = 0, ypos = 0;
+	glfwGetMonitorPos(_monitor, &xpos, &ypos);
+    float fw = 1, fh = 1;
+    GetMonitorScale(imonitor, fw, fh);
+
+	xpos += (videoMode->width/fw - width) * 0.5;
+	ypos += (videoMode->height/fh - height) * 0.5;
+	_monitor = nullptr;
+	glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        // on mac window will sometimes lose title when windowed
-        glfwSetWindowTitle(_mainWindow, _viewName.c_str());
+	// on mac window will sometimes lose title when windowed
+	glfwSetWindowTitle(_mainWindow, _viewName.c_str());
 #endif
-    }
 }
 
 int GLViewImpl::getMonitorCount() const {
@@ -884,6 +890,7 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow* /*window*/, unsigned int charact
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int /*y*/)
 {
     Director::getInstance()->setViewport();
+    _CallWindowStatusCallback();
 }
 
 void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
@@ -929,6 +936,7 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         Director::getInstance()->setViewport();
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
     }
+    _CallWindowStatusCallback();
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* /*window*/, int iconified)
@@ -953,6 +961,64 @@ void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* /*window*/, int focused)
     {
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_UNFOCUSED, nullptr);
     }
+}
+
+void GLViewImpl::_CallWindowStatusCallback()
+{
+    if (_window_stats_changed_cbk)
+    {
+        int width = 0, height = 0;
+        int count;
+        auto monitors = glfwGetMonitors(&count);
+        // get monitor id
+        auto monitor = glfwGetWindowMonitor(getWindow());
+        int our_monitor = 0;
+        if (monitor)
+        {
+            // fullscreen, get our monitor
+            for (int imonitor = 0; imonitor < count; imonitor++)
+            {
+                if (monitor == monitors[imonitor])
+                {
+                    our_monitor = imonitor;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // windowed, get monitor from the position
+            int xpos, ypos;
+            float min_dist = -1;
+            glfwGetWindowPos(getWindow(), &xpos, &ypos);
+            // now, find the monitor
+            for (int imonitor = 0; imonitor < count; imonitor++)
+            {
+                // get monitor area
+                int xmon, ymon;
+                glfwGetMonitorPos(monitors[imonitor], &xmon, &ymon);
+                // ignore monitors on the side
+                if (xmon > xpos || ymon > ypos)
+                    continue;
+                float sq_dist = sqrt((xmon-xpos)*(xmon-xpos) + (ymon-ypos)*(ymon-ypos));
+                if (min_dist == -1 || sq_dist < min_dist)
+                {
+                    our_monitor = imonitor;
+                    min_dist = sq_dist;
+                }
+            }
+            // get size too
+            glfwGetFramebufferSize(getWindow(), &width, &height);
+        }
+        _window_stats_changed_cbk(our_monitor, width, height);
+    }
+}
+
+void GLViewImpl::GetMonitorScale(int monitor, float& fw, float& fh)
+{
+    int count;
+    auto monitors = glfwGetMonitors(&count);
+	glfwGetMonitorContentScale(monitors[monitor], &fw, &fh);
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

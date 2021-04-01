@@ -54,6 +54,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// monitor, width, height
+// if fullscreen, width and height are 0
+using WindowStatsChangedCbk = std::function<void(int, int, int)>;
 
 class CC_DLL GLViewImpl : public GLView
 {
@@ -85,9 +88,11 @@ public:
     void setFullscreen();
     void setFullscreen(int monitorIndex);
     void setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor);
-    void setWindowed(int width, int height);
+    void setWindowed(int width, int height, int imonitor=0);
     int getMonitorCount() const;
     Size getMonitorSize() const;
+    void SetWindowStatsChangedCbk(WindowStatsChangedCbk cbk) { _window_stats_changed_cbk = cbk; }
+    void GetMonitorScale(int monitor, float& fw, float& fh);
 
     /* override functions */
     virtual bool isOpenGLReady() override;
@@ -165,6 +170,9 @@ protected:
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
     void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
     void onGLFWWindowFocusCallback(GLFWwindow* window, int focused);
+
+    void _CallWindowStatusCallback();
+    WindowStatsChangedCbk _window_stats_changed_cbk;
 
     bool _captured;
     bool _supportTouch;
