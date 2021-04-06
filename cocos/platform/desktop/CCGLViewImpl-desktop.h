@@ -93,6 +93,7 @@ public:
     Size getMonitorSize() const;
     void SetWindowStatsChangedCbk(WindowStatsChangedCbk cbk) { _window_stats_changed_cbk = cbk; }
     void GetMonitorScale(int monitor, float& fw, float& fh);
+    void SetWindowTitle(std::string title);
 
     /* override functions */
     virtual bool isOpenGLReady() override;

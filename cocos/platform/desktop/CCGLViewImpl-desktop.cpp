@@ -375,6 +375,12 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     return true;
 }
 
+void GLViewImpl::SetWindowTitle(std::string title)
+{
+    _viewName = title;
+    glfwSetWindowTitle(_mainWindow, title.c_str());
+}
+
 bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 {
     //Create fullscreen window on primary monitor at its current video mode.
@@ -581,6 +587,7 @@ void GLViewImpl::setFullscreen() {
 
 void GLViewImpl::setFullscreen(int monitorIndex) {
     // set fullscreen on specific monitor
+    //cocos2d::log("==================setFullScreen(monitor=%d)", monitorIndex);
     int count = 0;
     GLFWmonitor** monitors = glfwGetMonitors(&count);
     if (monitorIndex < 0 || monitorIndex >= count) {
@@ -596,6 +603,8 @@ void GLViewImpl::setFullscreen(int monitorIndex) {
 
 void GLViewImpl::setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor) {
     _monitor = monitor;
+    //cocos2d::log("==================setFullScreen %dx%dx%d %s", videoMode.width, videoMode.height, videoMode.refreshRate,
+    //    glfwGetMonitorName(monitor));
     glfwSetWindowMonitor(_mainWindow, _monitor, 0, 0, videoMode.width, videoMode.height, videoMode.refreshRate);
 }
 
@@ -615,6 +624,8 @@ void GLViewImpl::setWindowed(int width, int height, int imonitor)
 
 	xpos += (videoMode->width/fw - width) * 0.5;
 	ypos += (videoMode->height/fh - height) * 0.5;
+    //cocos2d::log("==================setWindowed %dx%d %dx%d %s", xpos, ypos, width, height,
+    //    glfwGetMonitorName(_monitor));
 	_monitor = nullptr;
 	glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -655,6 +666,7 @@ void GLViewImpl::updateFrameSize()
 
         int frameBufferW = 0, frameBufferH = 0;
         glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
+        //cocos2d::log("=======updateFrameSize: got %dx%d and %dx%d", w, h, frameBufferW, frameBufferH);
 
         if (frameBufferW == 2 * w && frameBufferH == 2 * h)
         {
@@ -666,7 +678,9 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 2;
             }
-            glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+            //cocos2d::log("===============updateFrameSize sws %d", static_cast<int>(_screenSize.width / 2 * _retinaFactor));
+            // FG: don't know why but this sucks
+            //glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = true;
         }
@@ -676,7 +690,9 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 1;
             }
-            glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
+            //cocos2d::log("===============updateFrameSize sws2 %d", static_cast<int>(_screenSize.width * _retinaFactor * _frameZoomFactor));
+            // FG: don't know why but this sucks
+            //glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = false;
         }
@@ -685,6 +701,7 @@ void GLViewImpl::updateFrameSize()
 
 void GLViewImpl::setFrameSize(float width, float height)
 {
+    //cocos2d::log("=================setFrameSize: %d, %d", static_cast<int>(width), static_cast<int>(height));
     GLView::setFrameSize(width, height);
     updateFrameSize();
 }
@@ -895,6 +912,7 @@ void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int 
 
 void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 {
+    //cocos2d::log("=================onGLFWWindowFrameBufferSize %dx%d", w, h);
     float frameSizeW = _screenSize.width;
     float frameSizeH = _screenSize.height;
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
@@ -912,18 +930,21 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
             _retinaFactor = 2;
         }
 
+        //cocos2d::log("=================onGLFWWindowFrameBuffer sws3 %d", static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor));
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
     }
     else if (std::abs(factorX - 2.0f) < FLT_EPSILON && std::abs(factorY - 2.0f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = false;
         _retinaFactor = 1;
+        //cocos2d::log("=================onGLFWWindowFrameBuffer sws4 %d", static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor));
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * _retinaFactor * _frameZoomFactor));
     }
 }
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, int height)
 {
+    //cocos2d::log("===============onGLFWWindowSizeFunCallback: %d %d", width, height);
     if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
         Size baseDesignSize = _designResolutionSize;
