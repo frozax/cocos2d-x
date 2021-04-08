@@ -291,8 +291,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_ALPHA_BITS,_glContextAttrs.alphaBits);
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
+    glfwWindowHint(GLFW_SCALE_TO_MONITOR, GL_TRUE);
     
     glfwWindowHint(GLFW_SAMPLES, _glContextAttrs.multisamplingCount);
+
 
     int neededWidth = rect.size.width * _frameZoomFactor;
     int neededHeight = rect.size.height * _frameZoomFactor;
@@ -620,7 +622,12 @@ void GLViewImpl::setWindowed(int width, int height, int imonitor)
 	int xpos = 0, ypos = 0;
 	glfwGetMonitorPos(_monitor, &xpos, &ypos);
     float fw = 1, fh = 1;
-    GetMonitorScale(imonitor, fw, fh);
+    //GetMonitorScale(imonitor, fw, fh);
+
+    // workaround to support for initializatino with change of monitor
+    auto cur_mon = glfwGetWindowMonitor(_mainWindow);
+    if (!cur_mon)
+        setFullscreen(imonitor);
 
 	xpos += (videoMode->width/fw - width) * 0.5;
 	ypos += (videoMode->height/fh - height) * 0.5;
